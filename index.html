@@ -2,29 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Socket.IO chat</title>
+    <title>Chats</title>
     <base href="/">
     <link rel="stylesheet" type="text/css" href="/style.css">
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <ul class="pages">
+      <li class="chat page">
+        <div class="chatArea">
+          <ul class="messages"></ul>
+        </div>
+        <form action="">
+          <input id="m" placeholder="Type here..." /><button>Send</button>
+        </form>
+      </li>
+      <li class="login page">
+        <div class="form">
+          <h3 class="title">Enter a name:</h3>
+          <input class="userInput" type="text" maxLength="14">
+        </div> 
+      </li>
+    </ul>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-      $(function() {
-        var socket = io();
-        $('form').submit(function(e) {
-          e.preventDefault(); // prevents page reloading
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-        });
-        socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
-        })
-      });
-    </script>
+    <script src="main.js"></script>
   </body>
 </html>

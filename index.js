@@ -12,6 +12,10 @@ app.get('/style.css', function(req, res) {
     res.sendFile(__dirname + '/style.css');
 })
 
+app.get('/main.js', function(req, res) {
+    res.sendFile(__dirname + '/main.js');
+});
+
 io.on('connection', function(socket) {
     socket.on('chat message', function(msg) {
         io.emit('chat message', msg);
