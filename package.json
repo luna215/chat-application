@@ -1,0 +1,23 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luna215/chat-application.git"
+  },
+  "author": "paul-luna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luna215/chat-application/issues"
+  },
+  "homepage": "https://github.com/luna215/chat-application#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.2.0"
+  }
+}
