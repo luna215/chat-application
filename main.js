@@ -136,6 +136,11 @@ $(function() {
         addParticipantsMessage(data);
     });
 
+    socket.on('user left', (data) => {
+        log(`${data.username} left`);
+        addParticipantsMessage(data);
+    });
+
     // Prevents input from having injected markup
     const cleanInput = (input) => {
         return $('<div/>').text(input).html();

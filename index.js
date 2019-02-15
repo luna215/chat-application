@@ -19,10 +19,10 @@ app.get('/main.js', function(req, res) {
 var numUsers = 0;
 
 io.on('connection', function(socket) {
-    var addUser = false;
+    var addedUser = false;
 
     socket.on('add user', (username) => {
-        if(addUser) return;
+        if(addedUser) return;
 
         // we store the username in the socket session for this client
         socket.username = username;
@@ -46,6 +46,19 @@ io.on('connection', function(socket) {
       username: socket.username,
       message: data
     });
+  });
+
+  // when a user leaves
+  socket.on('disconnect', () => {
+    if(addedUser) {
+        --numUsers;
+        
+        // echo globally that a user has left
+        socket.broadcast.emit('user left', {
+            username: socket.username,
+            numUsers: numUsers
+        });
+    }
   });
 });
 
