@@ -1,20 +1,16 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
+var path = require('path');
 var io = require('socket.io')(http);
+var port = process.env.PORT || 3000;
 
-// loads index.html file
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+http.listen(port, () => {
+    console.log('Server listening at port %d', port);
 });
 
-// loads style.css file
-app.get('/style.css', function(req, res) {
-    res.sendFile(__dirname + '/style.css');
-})
-
-app.get('/main.js', function(req, res) {
-    res.sendFile(__dirname + '/main.js');
-});
+// Routing
+app.use(express.static(path.join(__dirname, 'public')));
 
 var numUsers = 0;
 
@@ -62,6 +58,3 @@ io.on('connection', function(socket) {
   });
 });
 
-http.listen(3000, function() {
-    console.log('listening on *:3000');
-});
