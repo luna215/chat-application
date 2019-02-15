@@ -123,24 +123,6 @@ $(function() {
       }
     }
 
-    socket.on('new message', function(data) {
-      addChatMessage(data);
-    });
-
-    socket.on('login', (data) => {
-        connected = true;
-
-        // Display welcome message
-        var message = "Welcome to the chat!";
-        log(message, {prepend: true});
-        addParticipantsMessage(data);
-    });
-
-    socket.on('user left', (data) => {
-        log(`${data.username} left`);
-        addParticipantsMessage(data);
-    });
-
     // Prevents input from having injected markup
     const cleanInput = (input) => {
         return $('<div/>').text(input).html();
@@ -167,5 +149,23 @@ $(function() {
               setUsername();
             }
         }
-    })
+    });
+
+    socket.on('new message', function(data) {
+      addChatMessage(data);
+    });
+
+    socket.on('login', (data) => {
+        connected = true;
+
+        // Display welcome message
+        var message = "Welcome to the chat!";
+        log(message, {prepend: true});
+        addParticipantsMessage(data);
+    });
+
+    socket.on('user left', (data) => {
+        log(`${data.username} left`);
+        addParticipantsMessage(data);
+    });
   });
