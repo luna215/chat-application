@@ -26,7 +26,7 @@ io.on('connection', function(socket) {
 
         // we store the username in the socket session for this client
         socket.username = username;
-        ++numUsers; 
+        ++numUsers;
         addedUser = true;
         socket.emit('login', {
             numUsers: numUsers
@@ -39,9 +39,14 @@ io.on('connection', function(socket) {
         });
     });
 
-    socket.on('chat message', function(msg) {
-        io.emit('chat message', msg);
-    })
+    // when the client emits 'new message', this listens and executes
+  socket.on('new message', (data) => {
+    // we tell the client to execute 'new message'
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
+  });
 });
 
 http.listen(3000, function() {
