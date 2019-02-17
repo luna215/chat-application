@@ -6,6 +6,7 @@ html {
     font-weight: 300;
     -web-font-smoothing: antialiased;
 }
+
 html, input {
   font-family:
     "HelveticaNeue-Light",
@@ -133,4 +134,8 @@ ul {
   overflow: hidden;
   padding-right: 15px;
   text-align: right;
+}
+
+.message.typing .messageBody {
+  color: gray;
 }

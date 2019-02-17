@@ -13,6 +13,7 @@ http.listen(port, () => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 var numUsers = 0;
+var users = [];
 
 io.on('connection', function(socket) {
     var addedUser = false;
@@ -22,17 +23,24 @@ io.on('connection', function(socket) {
 
         // we store the username in the socket session for this client
         socket.username = username;
-        ++numUsers;
-        addedUser = true;
-        socket.emit('login', {
-            numUsers: numUsers
-        });
+        if(users.includes(socket.username)){
+            socket.emit('user already exist', {
+                message: 'User already exists. Choose another name.',
+            });
+        } else {
+            users.push(socket.username);
+            ++numUsers;
+            addedUser = true;
+            socket.emit('login', {
+                numUsers: numUsers,
+            });
+            // echo globally (all clients) that a person has connected
+            socket.broadcast.emit('user joined', {
+                username: socket.username,
+                numUsers: numUsers
+            });
+        }
 
-        // echo globally (all clients) that a person has connected
-        socket.broadcast.emit('user joined', {
-            username: socket.username,
-            numUsers: numUsers
-        });
     });
 
     // when the client emits 'new message', this listens and executes
@@ -44,11 +52,26 @@ io.on('connection', function(socket) {
     });
   });
 
+  socket.on('typing', () => {
+    socket.broadcast.emit('typing', {
+        username: socket.username,
+    });
+  });
+
+  socket.on('stop typing', () => {
+      socket.broadcast.emit('stop typing', {
+          username: socket.username
+      });
+  });
+
   // when a user leaves
   socket.on('disconnect', () => {
     if(addedUser) {
         --numUsers;
-        
+
+        // Remove username from the list of users
+        users = users.filter((username) => username !== socket.username);
+
         // echo globally that a user has left
         socket.broadcast.emit('user left', {
             username: socket.username,
