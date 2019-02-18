@@ -29,6 +29,21 @@ ul {
   word-wrap: break-word;
 }
 
+/* Section */
+.messageArea {
+  height: 100%;
+  width: 85%;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  width: 15%;
+  height: 100%;
+  background: #312450;
+  color: #fff;
+}
+
 /* Pages */
 .pages {
     height: 100%;
@@ -94,7 +109,8 @@ ul {
   padding-left: 10px;
   position: absolute;
   right: 0;
-  width: 100%;
+  width: 85%;
+  margin-left: 15%;
 }
 
 /* Font */
@@ -125,6 +141,7 @@ ul {
 .messages {
   height: 100%;
   margin: 0;
+  margin-left: 15%;
   overflow-y: scroll;
   padding: 10px 20px 10px 20px;
 }
